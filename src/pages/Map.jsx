@@ -1,19 +1,16 @@
-import { useState } from 'react';
-import { Map, Placemark, Circle, GeoObject } from '@pbe/react-yandex-maps';
+import { useState, useEffect } from 'react';
+import { Map, Placemark, Circle, GeoObject, Polygon } from '@pbe/react-yandex-maps';
 
-import Card from '../components/Card';
 import Nav from '../components/Nav';
 
 import { Form } from 'react-router-dom';
 
 let regions = [
     {
-        name: 'Шерешеш',
-        geometry: [[52.9199042, 87.971775], 100000]
+        name: 'Кузбасс',
     },
     {
         name: 'Москва',
-        geometry: [[55.5592356, 35.0194095], 100000]
     }
 ]
 
@@ -22,40 +19,63 @@ let posts = [
         img: '/photos/1 команда (1).jpeg',
         body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores, sapiente.',
         tags: ['лес'],
-        region: 'Москва'
+        region: 'Москва',
+        title: 'Шерегеш'
     },
     {
         img: '/photos/1 команда (5).jpeg',
         body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores, sapiente.',
         tags: ['горы', 'небо'],
-        region: 'Шерегеш'
+        region: 'Кузбасс',
+        title: 'Шерегеш'
     },
     {
         img: '/photos/1 команда (16).jpeg',
         body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores, sapiente.',
-        tags: ['лес']
+        tags: ['лес'],
+        region: 'Москва',
+        title: 'Шерегеш'
     },
     {
         img: '/photos/1 команда (17).jpeg',
         body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores, sapiente.',
-        tags: ['река']
+        tags: ['река'],
+        region: 'Кузбасс',
+        title: 'Шерегеш'
     },
     {
         img: '/photos/1 команда (20).jpeg',
         body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores, sapiente.',
-        tags: ['Лес']
+        tags: ['Лес'],
+        region: 'Кузбасс',
+        title: 'Шерегеш'
     },
 ]
 
 export default function MapPage (props) {
-    const [regionSelected, setRegionSelected] = useState('')
+    const [regionSelected, setRegionSelected] = useState({name: 'any'})
     const [modalData, setModalData] = useState(null)
     const [selectedTags, setSelectedTags] = useState([])
-    
+    const [kuzzData, setKuzzData] = useState(null);
+    const [moscowData, setMoscowData] = useState(null);
+
     async function handleRegionSelect (el) {
         setRegionSelected(el)
         // const response = await fetch(`/api/images?region=${el.name}`)
     }
+
+    useEffect(() => {
+        fetch('/moscow.geojson') // Замените на путь к вашему GeoJSON файлу
+          .then(response => response.json())
+          .then(data => setMoscowData(data));
+        fetch('/kuzz.geojson') // Замените на путь к вашему GeoJSON файлу
+          .then(response => response.json())
+          .then(data => setKuzzData(data));
+      }, []);
+    
+      if (!moscowData && !kuzzData) {
+        return <div>Загрузка данных...</div>;
+      }
 
     function modal() {
         return (
@@ -63,9 +83,12 @@ export default function MapPage (props) {
                 <div className="modal-bg" onClick={() => setModalData(null)} />
                 <div className="modal">
                     <img src={modalData.img} alt="" />
-                    <p>
-                        {modalData.body}
-                    </p>
+                    <div className="modal-text">
+                        <h1>{modalData.title}</h1>
+                        <p className=''>
+                            {modalData.body}
+                        </p>
+                    </div>
                 </div>
             </>
         )
@@ -84,6 +107,7 @@ export default function MapPage (props) {
         <div className="">
             {modalData ? modal() : null}
             <Nav />
+            {/* <MapComponent /> */}
             <Map
             className='y-map'
                 defaultState={{
@@ -92,15 +116,54 @@ export default function MapPage (props) {
                 controls: ["zoomControl"],
                 }}
                 modules={["control.ZoomControl"]}>
-                {regions.map((el, i) => {
-                return (<Circle
-                    geometry={el.geometry}
-                    onClick={() => handleRegionSelect(el)}
-                    key={i}
-                />)}
-                )}
-                
+                {kuzzData.features.map((feature, index) => (
+          <GeoObject
+            key={index}
+            onClick={() => handleRegionSelect(regions[0])}
+            geometry={{
+                type: 'Polygon',
+                coordinates: feature.geometry.coordinates.map(polygon => 
+                  polygon.map(coord => [coord[1], coord[0]]) 
+                ),
+              }}
+            properties={{
+              hintContent: feature.properties.name, // Подсказка при наведении
+            }}
+            options={{
+              fill: true,
+              fillColor: '#007bff', // Цвет заливки
+              fillOpacity: 0.5, // Прозрачность заливки
+              strokeColor: '#000', // Цвет обводки
+              strokeOpacity: 1, // Прозрачность обводки
+            }}
+          />
+          
+        ))}
+        {moscowData ? moscowData.features.map((feature, index) => (
+          <GeoObject
+            key={index}
+            onClick={() => handleRegionSelect(regions[1])}
+            geometry={{
+                type: 'Polygon',
+                coordinates: feature.geometry.coordinates.map(polygon => 
+                  polygon.map(coord => [coord[1], coord[0]]) 
+                ),
+              }}
+            properties={{
+              hintContent: feature.properties.name, // Подсказка при наведении
+            }}
+            options={{
+              fill: true,
+              fillColor: '#007bff', // Цвет заливки
+              fillOpacity: 0.5, // Прозрачность заливки
+              strokeColor: '#000', // Цвет обводки
+              strokeOpacity: 1, // Прозрачность обводки
+            }}
+          />
+          
+        )) : null}
             </Map>
+            {regionSelected.name}
             <main id="main">
                 <div class="container">
                     <div class="inner">
@@ -127,13 +190,14 @@ export default function MapPage (props) {
                                     <h3 class="filter_heading">Регион</h3>
                                 </div>
                                 <div class="hide_menu">
-                                    <select name="region_input" class="region_input">
+                                    <select onChange={e => setRegionSelected({name: e.target.value})} name="region_input" class="region_input">
+                                        {regionSelected.name === 'any' ? <option value="any" selected>Любой</option> : <option value="any">Любой</option>}
                                         {regions.map((el, i) => {
-                                            <option value="any">Любой</option>
+                                            
                                             if (regionSelected.name === el.name) {
-                                                return <option key={i} value={el.name} selected>{el.name}</option>
-                                            } else {
-                                                return <option key={i} value={el.name}>{el.name}</option>
+                                                 return <option key={i} value={el.name} selected>{el.name}</option>
+                                             } else {
+                                                 return <option key={i} value={el.name}>{el.name}</option>
                                             }
                                             
                                         })}
@@ -207,6 +271,10 @@ export default function MapPage (props) {
                             <div class="inner">
                                 <ul class="images_posts">
                                     {posts.map((el, i) => {
+
+                                        if (regionSelected.name !== 'any' && el.region !== regionSelected.name){
+                                            return
+                                        }
 
                                         if (selectedTags.length > 0 && !el.tags.some(r => selectedTags.includes(r))) {
                                             return
