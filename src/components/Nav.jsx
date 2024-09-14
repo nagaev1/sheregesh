@@ -16,9 +16,10 @@ export default function Nav () {
                 <button type="submit" id="start_search"></button>
               </Form>
             </div>
-            <div class="right">
-              <Link to="/login"><button class="login_btn"></button></Link>
-            </div>
+            <div class="right flex">
+
+            <Link to="/login" class="button_start" style={{margin: "0px 0px 0px 10px;"}}><img src="profile_icon.svg" /></Link>
+          </div>
           </div>
         </div>
       </header>

@@ -1,3 +1,6 @@
+.btn-close {
+  font-size: 5rem;
+}
 
 .modal-bg {
   position: fixed;
@@ -52,48 +55,6 @@
   height: 40rem;
 }
 
-#login-form {
-  width: 40rem;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 1rem;
-  border-radius: 2rem;
-  box-shadow: 0px 5px 10px black;
-}
-
-#login-form input {
-  border: 1px solid black;
-  border-radius: 1rem;
-  padding: 0.5rem;
-  font-size: 2rem;
-}
-
-#login-form label {
-  margin-top: 1rem;
-  margin-bottom: 0.25rem;
-  font-size: 1.5rem;
-}
-
-#login-form a {
-  margin-top: 1rem ;
-}
-
-#login-form button {
-  background-color: #B0A2CB;
-  color: #FFFFFF;
-  padding: 1rem;
-  margin-top: 2rem;
-  font-size: 1.5rem;
-  border-radius: 16px;
-}
-
-#login-form h1 {
-  text-align: center;
-  font-weight: normal;
-  margin-bottom: 4rem;
-  font-size: 3rem;
-}
-
 .flex-col {
   flex-direction: column;
 }
@@ -102,14 +63,13 @@
   justify-content: space-between;
 }
 
-.min-h-sh {
+.min-h-svh {
   min-height: 100svh;
 }
 
 .text-xl {
   font-size: 1.5rem;
 }
-
 /* Подключение шрифтов */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
@@ -265,13 +225,17 @@ h2.heading {
   background: #EAFCEE;
   padding: 10px 24px;
   font-size: 1.4rem;
-  box-shadow: 0px 4px 8px 4px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 4px 8px 4px rgba(0, 0, 0, 0.1);
   transition: 0.3s linear;
 }
 
 #main .left .fast_tags .tag:hover {
   background: #B59FDE;
   transform: scale(1.05);
+}
+
+a {
+  display: block;
 }
 
 .filter_b .flex {
@@ -293,7 +257,7 @@ select.region_input, select.color_input, select.season_input, select.orientation
   margin-bottom: 20px;
 }
 
-button.button_start {
+button.button_start, a.button_start {
   cursor: pointer;
   display: block;
   padding: 10px 24px;
@@ -307,7 +271,7 @@ button.button_start {
   transition: 0.3s linear;
 }
 
-button.button_start:hover {
+button.button_start:hover, a.button_start:hover  {
   transform: scale(1.05);
 }
 
@@ -365,4 +329,47 @@ img.partners {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+
+.pos {
+  text-align: center;
+}
+
+.form_container {
+  width: 600px;
+  background: white;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px 12px rgba(0, 0, 0, 0.25);
+  padding: 50px 30px;
+} 
+
+.form_container .new_image_form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form_name {
+  text-align: center;
+  font-size: 3rem;
+  margin: 0px 0px 15px;
+}
+
+.form_container .t_input {
+  border-radius: 99px;
+  height: 44px;
+  margin: 10px 0px;
+  padding: 5px 20px;
+  font-size: 1.4rem;
+  border: 1px solid #5B5B5B;
+}
+
+.image_bg {
+  text-align: center;
+  width: 1317px;
+  height: 1586px;
+  margin: 30px 50px;
+  background: url(../public/profile.png) center/cover;
 }

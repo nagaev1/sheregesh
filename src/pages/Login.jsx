@@ -1,22 +1,28 @@
 import Nav from "../components/Nav"
+import Footer from "../components/Footer"
 import { Form, Link } from "react-router-dom"
 
 export default function LoginPage () {
 
     return (
-        <div className="flex min-h-sh flex-col justify-between">
+        <div className=" flex flex-col min-h-svh justify-between">
             <Nav />
-            <Form method="post" action="/api/user/login">
-                <div className="flex flex-col" id="login-form">
-                    <h1 className="">Вход</h1>
-                    <label htmlFor="email">Адрес электронной почты</label>
-                    <input className="text-xl" type="email" id="email" name="email" autoComplete="email" placeholder="email" />
-                    <label htmlFor="password">Пароль</label>
-                    <input id="password" className="text-xl" type="password" name="password" autoComplete="password" placeholder="password" />
-                    <Link to="#" className="text-xl">Забыли пароль?</Link>
-                    <button type="submit">Войти</button>
+            <main id="main" class="pos">
+                <div class="container pos">
+                    <div class="inner pos">
+                        <div class="form_container">
+                            <h3 class="form_name">
+                                Авторизация
+                            </h3>
+                            <Form action="" class="new_image_form">
+                                <input name="login" class="t_input" placeholder="Логин" type="text" />
+                                <input name="password" class="t_input" placeholder="Пароль" type="password" />
+                                <Link to="/profile" class="button_start">Войти</Link>
+                            </Form>
+                        </div>
+                    </div>
                 </div>
-            </Form>
+            </main>
             <div className=""></div>
         </div>
     )

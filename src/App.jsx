@@ -10,11 +10,8 @@ import { YMaps, Map } from '@pbe/react-yandex-maps';
 
 
 import MapPage from './pages/Map'
-import HomePage from './pages/Home';
-import ImagesPage from './pages/Images';
 import LoginPage from './pages/Login';
-import RegisterPage from './pages/Register';
-import TestPage from './pages/Test';
+import ProfilePage from './pages/Profile';
 
 const router = createBrowserRouter([
   {
@@ -26,21 +23,13 @@ const router = createBrowserRouter([
     element: <MapPage />
   },
   {
-    path: 'images',
-    element: <ImagesPage />
-  },
-  {
     path: 'login',
     element: <LoginPage />
   },
   {
-    path: 'register',
-    element: <RegisterPage />
+    path: 'profile',
+    element: <ProfilePage  />
   },
-  {
-    path: 'test',
-    element: <TestPage />
-  }
 ]);
 
 function App() {

@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Map, Placemark, Circle, GeoObject, Polygon } from '@pbe/react-yandex-maps';
+import { IoIosClose } from "react-icons/io";
+
+import Footer from '../components/Footer';
 
 import Nav from '../components/Nav';
 
@@ -24,10 +27,10 @@ let posts = [
     },
     {
         img: '/photos/1 команда (5).jpeg',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores, sapiente.',
+        body: 'Посетил Кузбасс с командой "Больше чем путешествие" — это было настоящее приключение! Мы исследовали невероятные горные пейзажи, встретили гостеприимных местных жителей и узнали много нового о культуре региона. Отдельное спасибо за организацию поездки — все было на высшем уровне!',
         tags: ['горы', 'небо'],
         region: 'Кузбасс',
-        title: 'Шерегеш'
+        title: 'Незабываемая поездка в сердце Сибири'
     },
     {
         img: '/photos/1 команда (16).jpeg',
@@ -38,17 +41,73 @@ let posts = [
     },
     {
         img: '/photos/1 команда (17).jpeg',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores, sapiente.',
+        body: 'Кузбасс покорил меня своей природной красотой и богатой историей. Благодаря "Больше чем путешествие" я смогла увидеть самые красивые места региона и насладиться каждым моментом этого путешествия. Теперь Кузбасс навсегда останется в моем сердце!',
         tags: ['река'],
         region: 'Кузбасс',
-        title: 'Шерегеш'
+        title: 'Очарование Кузбасса'
     },
     {
         img: '/photos/1 команда (20).jpeg',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores, sapiente.',
-        tags: ['Лес'],
+        body: 'С "Больше чем путешествие" я открыл для себя Кузбасс с совершенно новой стороны. Мы поднимались на горные вершины, гуляли по лесам и наслаждались тишиной сибирской природы. Эти моменты останутся со мной навсегда!"Путешествие мечты в Кузбасс"',
+        tags: ['лес'],
         region: 'Кузбасс',
-        title: 'Шерегеш'
+        title: 'Кузбасс: тайны сибирской природы'
+    },
+    {
+        img: '/photos/photo_2024-09-14_09-58-45 (2).jpg',
+        body: 'Спасибо "Больше чем путешествие" за отлично организованную поездку в Кузбасс! Это было настоящее путешествие мечты: мы посетили уникальные природные объекты, узнали много нового о жизни в Сибири и сделали массу потрясающих фотографий',
+        tags: ['лес'],
+        region: 'Кузбасс',
+        title: 'Путешествие мечты в Кузбасс'
+    },
+    {
+        img: '/photos/photo_2024-09-14_09-58-45.jpg',
+        body: 'Посетив Кузбасс с Больше чем путешествие, я почувствовал, как оживают древние легенды Сибири. Природа здесь просто завораживает, а организация поездки была на высшем уровне. Обязательно вернусь сюда снова!',
+        tags: ['лес', 'небо'],
+        region: 'Кузбасс',
+        title: 'Кузбасс — место, где оживают легенды'
+    },
+    {
+        img: '/photos/photo_2024-09-14_09-58-145.jpg',
+        body: 'С Больше чем путешествие я попала в настоящую сибирскую сказку! Кузбасс очаровал меня своими горными пейзажами, чистыми озерами и гостеприимными людьми. Спасибо за незабываемое приключение!',
+        tags: ['горы', 'небо'],
+        region: 'Кузбасс',
+        title: 'Как красиво'
+    },
+    {
+        img: '/photos/photo_2024-09-14_10-02-11.jpg',
+        body: 'Путешествие в Кузбасс с Больше чем путешествие стало для меня источником нового вдохновения. Уникальная природа, мощные горы и тайга — это просто невероятно! Спасибо за потрясающую организацию и незабываемые впечатления!',
+        tags: ['небо'],
+        region: 'Кузбасс',
+        title: 'Привет Шерегеш'
+    },
+    {
+        img: '/photos/photo_2024-09-14_10-02-12 (2).jpg',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores, sapiente.',
+        tags: ['небо', 'лес'],
+        region: 'Москва',
+        title: 'Привет Москва'
+    },
+    {
+        img: '/photos/photo_2024-09-14_10-02-12.jpg',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores, sapiente.',
+        tags: ['небо', 'лес', 'горы'],
+        region: 'Кузбасс',
+        title: 'Шерегеш люблю'
+    },
+    {
+        img: '/photos/Команда 2 (23).jpeg',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores, sapiente.',
+        tags: ['небо'],
+        region: 'Кузбасс',
+        title: 'Шерегеш люблю'
+    },
+    {
+        img: '/photos/Команда 2 (65) — копия.jpeg',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores, sapiente.',
+        tags: ['небо', 'лес', 'горы'],
+        region: 'Кузбасс',
+        title: 'Шерегеш люблю'
     },
 ]
 
@@ -84,7 +143,10 @@ export default function MapPage (props) {
                 <div className="modal">
                     <img src={modalData.img} alt="" />
                     <div className="modal-text">
-                        <h1>{modalData.title}</h1>
+                        <div className="flex justify-between">
+                            <h1>{modalData.title}</h1>
+                            <div className="btn-close" onClick={() => setModalData(null)}><IoIosClose /></div>
+                        </div>
                         <p className=''>
                             {modalData.body}
                         </p>
@@ -163,7 +225,6 @@ export default function MapPage (props) {
           
         )) : null}
             </Map>
-            {regionSelected.name}
             <main id="main">
                 <div class="container">
                     <div class="inner">
@@ -182,7 +243,7 @@ export default function MapPage (props) {
                             <div onClick={() => handleSelectTag('реки')} class="tag">Река</div>
                             </div>
                             <div class="filters_block">
-                            <span style={{fontSize: '1.5rem'}}>{selectedTags.toString()} </span>
+                            <span style={{fontSize: 1.5+'rem'}}>{selectedTags.toString()} </span>
                             {selectedTags.length > 0 ? <button onClick={() => setSelectedTags([])}>очистить</button> : null}
                             <Form action="" class="filter_f">
                                 <div class="filter_b">
@@ -206,7 +267,8 @@ export default function MapPage (props) {
                                 </div>
 
                                 <div class="filter_b">
-                                <div class="flex">
+                                {/* цвета */}
+                                {/* <div class="flex">
                                     <h3 class="filter_heading">Цвет</h3>
                                 </div>
                                 <div class="hide_menu">
@@ -216,11 +278,11 @@ export default function MapPage (props) {
                                         <option value="Зелёный">Серый</option>
                                         <option selected value="Всё" >Не выбранно</option>
                                     </select>
-                                </div>
+                                </div> */}
                                 </div>
 
                                 <div class="filter_b">
-                                <div class="flex">
+                                {/* <div class="flex">
                                     <h3 class="filter_heading">Время года</h3>
                                 </div>
                                 <div class="hide_menu">
@@ -231,11 +293,11 @@ export default function MapPage (props) {
                                         <option value="Зима">Весна</option>
                                         <option selected value="Всё" >Не выбранно</option>
                                     </select>
-                                </div>
+                                </div> */}
                                 </div>
 
                                 <div class="filter_b">
-                                <div class="flex">
+                                {/* <div class="flex">
                                     <h3 class="filter_heading">Ориентация</h3>
                                 </div>
                                 <div class="hide_menu">
@@ -244,7 +306,7 @@ export default function MapPage (props) {
                                         <option value="Горизонтальное">Горизонтальное</option>
                                         <option selected value="Всё" >Не выбранно</option>
                                     </select>
-                                </div>
+                                </div> */}
                                 </div>
 
                                 <div class="filter_b">
@@ -256,6 +318,17 @@ export default function MapPage (props) {
                                         <option value="Москва-Питер">Москва-Питер</option>
                                         <option value="Камчатка-Алтай">Камчатка-Алтай</option>
                                         <option selected value="Всё" >Все</option>
+                                    </select>
+                                </div>
+                                </div>
+                                <div class="filter_b">
+                                <div class="flex">
+                                    <h3 class="filter_heading">Дата создания</h3>
+                                </div>
+                                <div class="hide_menu">
+                                    <select name="marsh_input" class="marsh_input">
+                                        <option value="Москва-Питер">По возрастанию</option>
+                                        <option value="Камчатка-Алтай">По убыванию</option>
                                     </select>
                                 </div>
                                 </div>
@@ -295,21 +368,7 @@ export default function MapPage (props) {
                     </div>
                 </div>
                 </main>
-                <footer id="footer">
-      <div class="container">
-        <div class="inner">
-          <div class="left">
-            <img src="logo_white.png" width="118" height="110"/>
-          </div>
-          <div class="center">
-            <img src="footer_center.png" width="371" height="142"/>
-          </div>
-          <div class="right">
-            <img src="right_footer.png" width="256" height="111"/>
-          </div>
-        </div>
-      </div>
-    </footer>
+                <Footer />
     </div>
     )
 }
